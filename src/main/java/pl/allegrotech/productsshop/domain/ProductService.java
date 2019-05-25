@@ -44,4 +44,8 @@ public class ProductService {
 
         return ProductTransformer.modelToDTO(response);
     }
+
+    public void deleteProduct(Long id) {
+        productRepository.deleteById(id);
+    }
 }
