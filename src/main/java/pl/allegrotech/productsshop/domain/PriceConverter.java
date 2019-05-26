@@ -2,7 +2,7 @@ package pl.allegrotech.productsshop.domain;
 
 import pl.allegrotech.productsshop.infrastructure.PriceModel;
 
-class PriceTransformer {
+class PriceConverter {
 
     static PriceDTO modelToDTO(PriceModel model) {
         PriceDTO dto = new PriceDTO();
@@ -11,8 +11,7 @@ class PriceTransformer {
         return dto;
     }
 
-    static PriceModel dtoToModel(PriceDTO dto) {
-        PriceModel model = new PriceModel();
+    static PriceModel dtoToModel(PriceDTO dto, PriceModel model) {
         model.setAmount(dto.getAmount());
         model.setCurrency(dto.getCurrency());
         return model;

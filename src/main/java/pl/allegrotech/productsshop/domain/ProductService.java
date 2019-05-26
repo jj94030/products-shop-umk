@@ -2,8 +2,6 @@ package pl.allegrotech.productsshop.domain;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import pl.allegrotech.productsshop.infrastructure.PriceModel;
-import pl.allegrotech.productsshop.infrastructure.PriceRepository;
 import pl.allegrotech.productsshop.infrastructure.ProductModel;
 import pl.allegrotech.productsshop.infrastructure.ProductRepository;
 
@@ -15,37 +13,40 @@ import java.util.stream.Collectors;
 public class ProductService {
 
     private final ProductRepository productRepository;
-    private final PriceRepository priceRepository;
 
     @Autowired
-    public ProductService(ProductRepository productRepository,
-                          PriceRepository priceRepository) {
+    public ProductService(ProductRepository productRepository) {
         this.productRepository = productRepository;
-        this.priceRepository = priceRepository;
     }
 
     public List<ProductDTO> getAll() {
-
-        return productRepository.findAll().stream().map(ProductTransformer::modelToDTO).collect(Collectors.toList());
+        return productRepository.findAll().stream()
+                .map(ProductConverter::modelToDTO)
+                .collect(Collectors.toList());
     }
 
     public ProductDTO getById(Long id) {
         Optional<ProductModel> productModel = productRepository.findById(id);
 
-        return ProductTransformer.modelToDTO(productModel.get());
+        return ProductConverter.modelToDTO(productModel.get());
     }
 
     public ProductDTO create(ProductDTO request) {
-        PriceModel price = priceRepository.save(PriceTransformer.dtoToModel(request.getPrice()));
-        ProductModel product = ProductTransformer.dtoToModel(request);
-        product.setPrice(price);
+        ProductModel product = ProductConverter.dtoToModel(request, new ProductModel());
 
-        ProductModel response = productRepository.save(product);
-
-        return ProductTransformer.modelToDTO(response);
+        return ProductConverter.modelToDTO(productRepository.save(product));
     }
 
     public void deleteProduct(Long id) {
         productRepository.deleteById(id);
+    }
+
+    public ProductDTO update(ProductDTO request) {
+        Optional<ProductModel> productModel = productRepository.findById(request.getId());
+        ProductModel productToUpdate = ProductConverter.dtoToModel(request, productModel.get());
+
+        productRepository.save(productToUpdate);
+
+        return ProductConverter.modelToDTO(productToUpdate);
     }
 }
