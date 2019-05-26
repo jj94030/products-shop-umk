@@ -1,5 +1,6 @@
 package pl.allegrotech.productsshop.infrastructure;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -16,7 +17,7 @@ public class ProductModel {
     private String name;
     private String description;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     private PriceModel price;
 
 
