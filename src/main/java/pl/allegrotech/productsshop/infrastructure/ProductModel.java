@@ -20,6 +20,8 @@ public class ProductModel {
     @OneToOne(cascade = CascadeType.ALL)
     private PriceModel price;
 
+    private String imageUrl;
+
 
     public Long getId() {
         return id;
@@ -51,5 +53,13 @@ public class ProductModel {
 
     public void setPrice(PriceModel price) {
         this.price = price;
+    }
+
+    public String getImageUrl() {
+        return imageUrl;
+    }
+
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
     }
 }

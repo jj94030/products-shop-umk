@@ -11,6 +11,7 @@ class ProductConverter {
         dto.setName(model.getName());
         dto.setDescription(model.getDescription());
         dto.setPrice(PriceConverter.modelToDTO(model.getPrice()));
+        dto.setImageUrl(model.getImageUrl());
         return dto;
     }
 
@@ -18,6 +19,7 @@ class ProductConverter {
         model.setName(dto.getName());
         model.setDescription(dto.getDescription());
         model.setPrice(PriceConverter.dtoToModel(dto.getPrice(), new PriceModel()));
+        model.setImageUrl(dto.getImageUrl());
         return model;
     }
 }
