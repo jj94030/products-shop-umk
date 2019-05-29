@@ -20,6 +20,7 @@ import javax.validation.Valid;
 import java.util.List;
 
 @RestController
+@CrossOrigin
 @RequestMapping("/products")
 public class ProductEndpoint {
 
@@ -31,7 +32,7 @@ public class ProductEndpoint {
         this.productService = productService;
     }
 
-    @CrossOrigin
+
     @GetMapping
     ResponseEntity<List<ProductDTO>> getProducts() {
 
